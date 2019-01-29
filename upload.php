@@ -3,6 +3,9 @@
   if(isset($_POST['tapi_upload'])){
 
    $name = $_POST['nama'];
+   if(!isset($name) || !isset($_FILES['file'])){
+        header('location:index.php?id=err');
+}else{
    $target_dir = "videos/";
    $target_file = $target_dir . uniqid("video_", true) . '.mp4';
 
@@ -19,12 +22,13 @@
       $query = "INSERT INTO video_training(nama_video,referensi_video,url_video) VALUES('".$name."','".$reference_video."','".$url_video."')";
 
       mysqli_query($con,$query);
-      echo "Upload sukes.";
+      header('location:index.php?id=suc');
     }
 
   }else{
-    echo "Format file tidak diketarhui";
+    header('location:index.php?id=err');
   }
 
 } 
+}
 ?>

@@ -104,6 +104,16 @@
             <li class="breadcrumb-item active">Overview</li>
           </ol>
 
+          <?php
+          if(@$_GET['id'] == 'suc'){ ?>
+          <div class="alert alert-success">
+            <strong>Success!</strong> Indicates a successful or positive action.
+          </div> <?php } if(@$_GET['id'] == 'err'){ ?>
+          <div class="alert alert-danger">
+            <strong>Success!</strong> Indicates a successful or positive action.
+          </div>
+        <?php } ?>
+
           <!-- Area Chart Example-->
           <div class="card mb-3">
             <div class="card-header">
