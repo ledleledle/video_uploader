@@ -2,8 +2,8 @@
 
 $host = "localhost";
 $user = "root";
-$password = "Edibawer21";
-$db = "video_uploader";
+$password = "";
+$db = "aw";
 
 $con = mysqli_connect($host, $user, $password, $db);
 if (!$con) {
