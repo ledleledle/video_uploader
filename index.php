@@ -187,8 +187,8 @@
                       <?php }elseif(($row['status_aktif'] == 'inactive')){ ?>
                       <td><span class="badge badge-danger"><?php echo $row['status_aktif'] ?></span></td>
                     <?php } ?>
-                      <td align="center"><div class="btn btn-warning btn-sm"><i class="fas fa-edit"></i> Edit</div> 
-                      <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modal_del" data-whatever="@mdo"><i class="fas fa-trash"></i> Delete</button></td>
+                      <td align="center"><button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modal_up" data-update="<?php echo $row['id_video'];?>"><i class="fas fa-edit"></i> Edit</button> 
+                      <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modal_del" data-whatever="<?php echo $row['id_video']; ?>" data-judul="<?php echo $row['nama_video']; ?>"><i class="fas fa-trash"></i> Delete</button></td>
                     </tr>
                 <?php } ?>
                 </tbody>
@@ -217,7 +217,7 @@
     </a>
 
     <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade bd-example-modal-lg" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -234,24 +234,64 @@
         </div>
       </div>
     </div>
+<!-- Modal Update-->
+<div id="modal_up" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Edit Video</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form action="upload.php" method="POST" enctype="multipart/form-data">
+              <div class="box-body">
+                <div class="form-group">
+                  <label for="exampleInputEmail1"><b>Nama Video :</b></label>
+                  <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama Video">
+                </div>
+              <div class="form-group">
+                <label for="exampleInputEmail1"><b>Video Saat Ini :</b></label><br>
+                <video width="320" height="240" controls>
+                  <source src="<?php echo ''; ?>" type="video/mp4">
+                   Your browser does not support the video tag.
+                  </video>
+              </div>
+                <div class="form-group">
+                  <label for="exampleInputFile"><b>File input :</b></label><br>
+                  <input type="file" name="file" id="exampleInputFile">
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-warning" name="tapi_upload"><i class="fas fa-upload"></i> Update</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
 <!-- Modal Delete-->
 <div class="modal fade" id="modal_del" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Delete Data</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Delete Video</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <form>
+        <form action="delete_video.php" method="POST">
           <div class="form-group">
-            <label class="col-form-label">Anda Yakin Akan Menghapus Data Ini?</label>
+            <label class="col-form-label">Anda Yakin Akan Menghapus Video Ini?</label>
+            <form action="delete_video.php">
+              <input type="hidden" name="hapus_vid">
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-danger">Delete</button>
+        <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
       </div>
     </div>
   </div>
@@ -269,6 +309,16 @@
     <script src="vendor/datatables/jquery.dataTables.js"></script>
     <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
     <script src="js/demo/datatables-demo.js"></script>
+    <script>
+      $('#modal_del').on('show.bs.modal', function (event) {
+  var button = $(event.relatedTarget)
+  var recipient = button.data('whatever')
+  var judulq = button.data('judul')
+  var modal = $(this)
+  modal.find('.modal-title').text('Hapus Video Berjudul "' + judulq + '"')
+  modal.find('.modal-body input').val(recipient)
+})
+    </script>
   </body>
 
 </html>
