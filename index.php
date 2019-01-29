@@ -120,10 +120,10 @@
                 </div>
                 <div class="form-group">
                   <label for="exampleInputFile"><b>File input :</b></label><br>
-                  <input type="file" id="exampleInputFile">
+                  <input type="file" name="file" id="exampleInputFile">
               </div>
               <div class="box-footer">
-                <button type="submit" class="btn btn-primary"><i class="fas fa-upload"></i> Upload!</button>
+                <button type="submit" class="btn btn-primary" name="tapi_upload"><i class="fas fa-upload"></i> Upload</button>
               </div>
             </form>
           </div>

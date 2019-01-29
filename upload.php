@@ -2,9 +2,9 @@
   include("config.php");
   if(isset($_POST['tapi_upload'])){
 
-   $name = $_POST['name'];
+   $name = $_POST['nama'];
    $target_dir = "videos/";
-   $target_file = $target_dir . uniqid(date(), true) . '.mp4';
+   $target_file = $target_dir . uniqid("video_", true) . '.mp4';
 
    $videoFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
 
