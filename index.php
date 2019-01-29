@@ -1,3 +1,6 @@
+ <?php
+ session_start();
+  include("config.php"); ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -105,10 +108,10 @@
           </ol>
 
           <?php
-          if(@$_GET['id'] == 'suc'){ ?>
+          if(@$_SESSION['stats'] == 'suc'){ ?>
           <div class="alert alert-success">
             <strong>Success!</strong> Indicates a successful or positive action.
-          </div> <?php } if(@$_GET['id'] == 'err'){ ?>
+          </div> <?php } if(@$_SESSION['stats'] == 'err'){ ?>
           <div class="alert alert-danger">
             <strong>Success!</strong> Indicates a successful or positive action.
           </div>
@@ -144,10 +147,11 @@
           <div class="card mb-3">
             <div class="card-header">
               <i class="fas fa-table"></i>
-              Data Table Example</div>
+              Daftar Video</div>
             <div class="card-body">
               <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+
                   <thead>
                     <tr>
                       <th>id</th>
@@ -169,16 +173,25 @@
                     </tr>
                   </tfoot>
                   <tbody>
+                  <?php
+                  $shw = mysqli_query($con,'SELECT * FROM video_training');
+                  while($row = mysqli_fetch_array($shw)){
+                  ?>
                     <tr>
-                      <td>Tiger Nixon</td>
-                      <td>System Architect</td>
-                      <td>Edinburgh</td>
-                      <td>61</td>
-                      <td>2011/04/25</td>
-                      <td align="center"><div class="btn btn-warning"><i class="fas fa-edit"></i> Edit</div> 
-                      <div class="btn btn-danger"><i class="fas fa-trash"></i> Delete</div></td>
+                      <td><?php echo $row['id_video'] ?></td>
+                      <td><?php echo $row['nama_video'] ?></td>
+                      <td><?php echo $row['referensi_video'] ?></td>
+                      <td><?php echo $row['url_video'] ?></td>
+                      <?php if($row['status_aktif'] == 'active'){ ?>
+                      <td><span class="badge badge-success"><?php echo $row['status_aktif'] ?></span></td>
+                      <?php }elseif(($row['status_aktif'] == 'inactive')){ ?>
+                      <td><span class="badge badge-danger"><?php echo $row['status_aktif'] ?></span></td>
+                    <?php } ?>
+                      <td align="center"><div class="btn btn-warning btn-sm"><i class="fas fa-edit"></i> Edit</div> 
+                      <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modal_del" data-whatever="@mdo"><i class="fas fa-trash"></i> Delete</button></td>
                     </tr>
-                  </tbody>
+                <?php } ?>
+                </tbody>
                 </table>
               </div>
             </div>
@@ -221,7 +234,28 @@
         </div>
       </div>
     </div>
-
+<!-- Modal Delete-->
+<div class="modal fade" id="modal_del" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Delete Data</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label class="col-form-label">Anda Yakin Akan Menghapus Data Ini?</label>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-danger">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -238,3 +272,4 @@
   </body>
 
 </html>
+<?php unset($_SESSION['stats']);

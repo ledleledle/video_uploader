@@ -1,4 +1,5 @@
   <?php
+  session_start();
   include("config.php");
   if(isset($_POST['tapi_upload'])){
 
@@ -22,11 +23,13 @@
       $query = "INSERT INTO video_training(nama_video,referensi_video,url_video) VALUES('".$name."','".$reference_video."','".$url_video."')";
 
       mysqli_query($con,$query);
-      header('location:index.php?id=suc');
+      $_SESSION['stats'] = "suc";
+      header('location:index.php');
     }
 
   }else{
-    header('location:index.php?id=err');
+    $_SESSION['stats'] = "err";
+    header('location:index.php');
   }
 
 } 
