@@ -1,6 +1,10 @@
  <?php
  session_start();
-  include("config.php"); ?>
+  include("config.php"); 
+if(!isset($_SESSION['id_user'])){
+  header('location: login.php');
+}else{
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -44,37 +48,12 @@
 
       <!-- Navbar -->
       <ul class="navbar-nav ml-auto ml-md-0">
-        <li class="nav-item dropdown no-arrow mx-1">
-          <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fas fa-bell fa-fw"></i>
-            <span class="badge badge-danger">9+</span>
-          </a>
-          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="alertsDropdown">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Something else here</a>
-          </div>
-        </li>
-        <li class="nav-item dropdown no-arrow mx-1">
-          <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fas fa-envelope fa-fw"></i>
-            <span class="badge badge-danger">7</span>
-          </a>
-          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="messagesDropdown">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Something else here</a>
-          </div>
-        </li>
         <li class="nav-item dropdown no-arrow">
           <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-user-circle fa-fw"></i>
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
             <a class="dropdown-item" href="#">Settings</a>
-            <a class="dropdown-item" href="#">Activity Log</a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Logout</a>
           </div>
@@ -108,7 +87,11 @@
           </ol>
 
           <?php
-          if(@$_SESSION['stats'] == 'suc'){ ?>
+          if(@$_SESSION['stat'] == 'suc'){ ?>
+            <div class="alert alert-success">
+            <strong>Success!</strong> Login Berhasil
+          </div>
+          <?php } if(@$_SESSION['stats'] == 'suc'){ ?>
           <div class="alert alert-success">
             <strong>Success!</strong> Indicates a successful or positive action.
           </div> <?php } if(@$_SESSION['stats'] == 'err'){ ?>
@@ -136,7 +119,7 @@
                   <input type="file" name="file" id="exampleInputFile">
               </div>
               <div class="box-footer">
-                <button type="submit" class="btn btn-primary" name="tapi_upload"><i class="fas fa-upload"></i> Upload</button>
+                <button type="submit" class="btn btn-primary btn-sm" name="tapi_upload"><i class="fas fa-upload"></i> Upload</button>
               </div>
             </form>
           </div>
@@ -218,15 +201,15 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Anda Yakin Ingin Logout?</h5>
             <button class="close" type="button" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
           </div>
-          <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+          <div class="modal-body">Pilih Tombol "Logout" bila anda ingin mengakhiri sesi ini.</div>
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <a class="btn btn-danger" href="login.html">Logout</a>
+            <a class="btn btn-danger" href="logout.php">Logout</a>
           </div>
         </div>
       </div>
@@ -282,4 +265,4 @@
   </body>
 
 </html>
-<?php unset($_SESSION['stats']);
+<?php unset($_SESSION['stats']); }?>

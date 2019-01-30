@@ -1,5 +1,9 @@
 <?php
+session_start();
 include 'config.php';
+if(!isset($_SESSION['id_user'])){
+  header('location: login.php');
+}else{
 $id = $_GET['id'];
 $sql = mysqli_query($con, "SELECT * FROM video_training WHERE id_video = '$id'");
 $shw = mysqli_fetch_array($sql);
@@ -15,7 +19,7 @@ $shw = mysqli_fetch_array($sql);
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Video Uploader</title>
+    <title>Video Uploader - Edit</title>
 
     <!-- Bootstrap core CSS-->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -47,37 +51,12 @@ $shw = mysqli_fetch_array($sql);
 
       <!-- Navbar -->
       <ul class="navbar-nav ml-auto ml-md-0">
-        <li class="nav-item dropdown no-arrow mx-1">
-          <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fas fa-bell fa-fw"></i>
-            <span class="badge badge-danger">9+</span>
-          </a>
-          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="alertsDropdown">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Something else here</a>
-          </div>
-        </li>
-        <li class="nav-item dropdown no-arrow mx-1">
-          <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fas fa-envelope fa-fw"></i>
-            <span class="badge badge-danger">7</span>
-          </a>
-          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="messagesDropdown">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Something else here</a>
-          </div>
-        </li>
         <li class="nav-item dropdown no-arrow">
           <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-user-circle fa-fw"></i>
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
             <a class="dropdown-item" href="#">Settings</a>
-            <a class="dropdown-item" href="#">Activity Log</a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Logout</a>
           </div>
@@ -91,7 +70,7 @@ $shw = mysqli_fetch_array($sql);
       <!-- Sidebar -->
       <ul class="sidebar navbar-nav">
         <li class="nav-item active">
-          <a class="nav-link" href="#">
+          <a class="nav-link" href="index.php">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span>
           </a>
@@ -150,14 +129,14 @@ $shw = mysqli_fetch_array($sql);
     					<option>Inactive</option>
   					</select>
 				</div> 
-              <div class="box-footer">
-                <button type="submit" class="btn btn-primary" name="tapi_upload"><i class="fas fa-upload"></i> Update</button> <a href="index.php"><div class="btn btn-secondary"><i class="fas fa-window-close"></i> Cancle</div></a>
-              </div>
-            </form>
           </div>
         </div>
       </div>
             </div>
+            <div class="card-footer small" align="right">
+                <button type="submit" class="btn btn-primary btn-sm" name="tapi_upload"><i class="fas fa-upload"></i> Edit</button> <a href="index.php"><div class="btn btn-secondary btn-sm"><i class="fas fa-window-close"></i> Cancle</div></a>
+              </div>
+              </form>
           </div>
         <footer class="sticky-footer">
           <div class="container my-auto">
@@ -183,44 +162,20 @@ $shw = mysqli_fetch_array($sql);
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Anda Yakin Ingin Logout?</h5>
             <button class="close" type="button" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
           </div>
-          <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+          <div class="modal-body">Pilih Tombol "Logout" bila anda ingin mengakhiri sesi ini.</div>
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <a class="btn btn-danger" href="login.html">Logout</a>
+            <a class="btn btn-danger" href="logout.php">Logout</a>
           </div>
         </div>
       </div>
     </div>
-<!-- Modal Delete-->
-<div class="modal fade" id="modal_del" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Delete Video</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form action="delete_video.php" method="POST">
-          <div class="form-group">
-            <label class="col-form-label">Anda Yakin Akan Menghapus Video Ini?</label>
-            <form action="delete_video.php">
-              <input type="hidden" name="hapus_vid">
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-danger">Delete</button>
-            </form>
-      </div>
-    </div>
-  </div>
-</div>
+
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -231,3 +186,4 @@ $shw = mysqli_fetch_array($sql);
     <!-- Page level plugin JavaScript-->
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin.min.js"></script>
+    <?php } ?>
