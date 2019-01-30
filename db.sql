@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 29, 2019 at 05:09 AM
+-- Generation Time: Jan 30, 2019 at 04:12 AM
 -- Server version: 10.1.37-MariaDB
 -- PHP Version: 7.3.0
 
@@ -25,6 +25,26 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `user`
+--
+
+CREATE TABLE `user` (
+  `id_user` int(11) NOT NULL,
+  `username` varchar(20) NOT NULL,
+  `password` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`id_user`, `username`, `password`) VALUES
+(1, 'ledle', 'ledle'),
+(2, 'leon', 'leon');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `video_training`
 --
 
@@ -37,8 +57,21 @@ CREATE TABLE `video_training` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
+-- Dumping data for table `video_training`
+--
+
+INSERT INTO `video_training` (`id_video`, `nama_video`, `referensi_video`, `url_video`, `status_aktif`) VALUES
+(9, 'Code Igniter Tutorial', 'code_igniter_tutorial', 'http://localhostvideos/video_5c50bf49446a73.86165117.mp4', 'active');
+
+--
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `user`
+--
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`id_user`);
 
 --
 -- Indexes for table `video_training`
@@ -51,10 +84,16 @@ ALTER TABLE `video_training`
 --
 
 --
+-- AUTO_INCREMENT for table `user`
+--
+ALTER TABLE `user`
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `video_training`
 --
 ALTER TABLE `video_training`
-  MODIFY `id_video` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_video` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
