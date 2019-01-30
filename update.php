@@ -1,6 +1,9 @@
- <?php
- session_start();
-  include("config.php"); ?>
+<?php
+include 'config.php';
+$id = $_GET['id'];
+$sql = mysqli_query($con, "SELECT * FROM video_training WHERE id_video = '$id'");
+$shw = mysqli_fetch_array($sql);
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -102,9 +105,9 @@
           <!-- Breadcrumbs-->
           <ol class="breadcrumb">
             <li class="breadcrumb-item">
-              <a href="#">Dashboard</a>
+              <a href="index.php">Dashboard</a>
             </li>
-            <li class="breadcrumb-item active">Overview</li>
+            <li class="breadcrumb-item active">Edit</li>
           </ol>
 
           <?php
@@ -120,79 +123,41 @@
           <!-- Area Chart Example-->
           <div class="card mb-3">
             <div class="card-header">
-              <i class="fas fa-upload"></i> Video Uploader</div>
+              <i class="fas fa-upload"></i> Edit Video</div>
             <div class="card-body">
               <div class="row">
         <!-- left column -->
         <div class="col-md-6">
             <form action="upload.php" method="POST" enctype="multipart/form-data">
               <div class="box-body">
+              	<div class="form-group">
+                  <input type="hidden" class="form-control" id="nama" name="nama" value="<?php echo $shw['id_video'];
+?>" readonly>
+                </div>
                 <div class="form-group">
                   <label for="exampleInputEmail1"><b>Nama Video :</b></label>
-                  <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama Video">
+                  <input type="text" class="form-control" id="nama" name="nama" value="<?php echo $shw['nama_video'];
+?>">
                 </div>
                 <div class="form-group">
                   <label for="exampleInputFile"><b>File input :</b></label><br>
                   <input type="file" name="file" id="exampleInputFile">
               </div>
+               <div class="form-group">
+  				<label for="sel1"><b>Status Aktif :</b></label>
+  					<select class="form-control" name="status">
+    					<option>Active</option>
+    					<option>Inactive</option>
+  					</select>
+				</div> 
               <div class="box-footer">
-                <button type="submit" class="btn btn-primary" name="tapi_upload"><i class="fas fa-upload"></i> Upload</button>
+                <button type="submit" class="btn btn-primary" name="tapi_upload"><i class="fas fa-upload"></i> Update</button> <a href="index.php"><div class="btn btn-secondary"><i class="fas fa-window-close"></i> Cancle</div></a>
               </div>
             </form>
           </div>
         </div>
       </div>
             </div>
-          </div>
-          <div class="card mb-3">
-            <div class="card-header">
-              <i class="fas fa-table"></i>
-              Daftar Video</div>
-            <div class="card-body">
-              <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-
-                  <thead>
-                    <tr>
-                      <th>Nama</th>
-                      <th>Referensi</th>
-                      <th>URL</th>
-                      <th>Status</th>
-                      <th>Menu</th>
-                    </tr>
-                  </thead>
-                  <tfoot>
-                    <tr>
-                      <th>Nama</th>
-                      <th>Referensi</th>
-                      <th>URL</th>
-                      <th>Status</th>
-                      <th>Menu</th>
-                    </tr>
-                  </tfoot>
-                  <tbody style="font-size: 14px;">
-                  <?php
-                  $shw = mysqli_query($con,'SELECT * FROM video_training');
-                  while($row = mysqli_fetch_array($shw)){
-                  ?>
-                    <tr>
-                      <td><?php echo $row['nama_video'] ?></td>
-                      <td><?php echo $row['referensi_video'] ?></td>
-                      <td><?php echo $row['url_video'] ?></td>
-                      <?php if($row['status_aktif'] == 'active'){ ?>
-                      <td><span class="badge badge-success"><?php echo $row['status_aktif'] ?></span></td>
-                      <?php }elseif(($row['status_aktif'] == 'inactive')){ ?>
-                      <td><span class="badge badge-danger"><?php echo $row['status_aktif'] ?></span></td>
-                    <?php } ?>
-                      <td><a href="update.php?id=<?php echo $row['id_video'] ?>"><div class="btn btn-warning btn-sm"><i class="fas fa-edit"></i> Edit</div></a>
-                      <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modal_del" data-whatever="<?php echo $row['id_video']; ?>" data-judul="<?php echo $row['nama_video']; ?>"><i class="fas fa-trash"></i> Delete</button></td>
-                    </tr>
-                <?php } ?>
-                </tbody>
-                </table>
-              </div>
-            </div>
-            <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
           </div>
         <footer class="sticky-footer">
           <div class="container my-auto">
@@ -266,20 +231,3 @@
     <!-- Page level plugin JavaScript-->
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin.min.js"></script>
-    <script src="vendor/datatables/jquery.dataTables.js"></script>
-    <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
-    <script src="js/demo/datatables-demo.js"></script>
-    <script>
-      $('#modal_del').on('show.bs.modal', function (event) {
-  var button = $(event.relatedTarget)
-  var recipient = button.data('whatever')
-  var judulq = button.data('judul')
-  var modal = $(this)
-  modal.find('.modal-title').text('Hapus Video Berjudul "' + judulq + '"')
-  modal.find('.modal-body input').val(recipient)
-})
-    </script>
-  </body>
-
-</html>
-<?php unset($_SESSION['stats']);
