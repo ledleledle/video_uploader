@@ -81,7 +81,7 @@ if(!isset($_SESSION['id_user'])){
           <!-- Breadcrumbs-->
           <ol class="breadcrumb">
             <li class="breadcrumb-item">
-              <a href="#">Dashboard</a>
+              <a href="index.php">Dashboard</a>
             </li>
             <li class="breadcrumb-item active">Overview</li>
           </ol>
@@ -92,11 +92,20 @@ if(!isset($_SESSION['id_user'])){
             <strong>Success!</strong> Login Berhasil
           </div>
           <?php } if(@$_SESSION['stats'] == 'suc'){ ?>
+<<<<<<< HEAD
           <div class="alert alert-success">
             <strong>Success!</strong> Indicates a successful or positive action.
+=======
+          <div class="alert alert-succ  ess">
+            <strong>Success!</strong> Berkas berhasil diunggah.
+>>>>>>> 48d6367c980c99adbc44c61abcb9f5865700523e
           </div> <?php } if(@$_SESSION['stats'] == 'err'){ ?>
           <div class="alert alert-danger">
-            <strong>Success!</strong> Indicates a successful or positive action.
+            <strong>Oops!</strong> Terjadi suatu kesalahan.
+          </div>
+        <?php } if(@$_SESSION['update'] == 'suc'){ ?>
+          <div class="alert alert-success">
+            <strong>Success!</strong> Perubahan berhasil.
           </div>
         <?php } ?>
 
@@ -161,7 +170,7 @@ if(!isset($_SESSION['id_user'])){
                     <tr>
                       <td><?php echo $row['nama_video'] ?></td>
                       <td><?php echo $row['referensi_video'] ?></td>
-                      <td><?php echo $row['url_video'] ?></td>
+                      <td><a target="_blank" href="<?php echo $row['url_video'] ?>"><?php echo $row['url_video'] ?></a></td>
                       <?php if($row['status_aktif'] == 'active'){ ?>
                       <td><span class="badge badge-success"><?php echo $row['status_aktif'] ?></span></td>
                       <?php }elseif(($row['status_aktif'] == 'inactive')){ ?>

@@ -107,10 +107,10 @@ $shw = mysqli_fetch_array($sql);
               <div class="row">
         <!-- left column -->
         <div class="col-md-6">
-            <form action="upload.php" method="POST" enctype="multipart/form-data">
+            <form action="prosesupdate.php" method="POST" enctype="multipart/form-data">
               <div class="box-body">
-              	<div class="form-group">
-                  <input type="hidden" class="form-control" id="nama" name="nama" value="<?php echo $shw['id_video'];
+                <div class="form-group">
+                  <input type="hidden" class="form-control" id="nama" name="idvideo" value="<?php echo $shw['id_video'];
 ?>" readonly>
                 </div>
                 <div class="form-group">
@@ -120,20 +120,24 @@ $shw = mysqli_fetch_array($sql);
                 </div>
                 <div class="form-group">
                   <label for="exampleInputFile"><b>File input :</b></label><br>
-                  <input type="file" name="file" id="exampleInputFile">
+                  <input type="file" name="fileupdate" id="exampleInputFile">
               </div>
                <div class="form-group">
-  				<label for="sel1"><b>Status Aktif :</b></label>
-  					<select class="form-control" name="status">
-    					<option>Active</option>
-    					<option>Inactive</option>
-  					</select>
+          <label for="sel1"><b>Status Aktif :</b></label>
+            <select class="form-control" name="status">
+              <option>Active</option>
+              <option>Inactive</option>
+            </select>
 				</div> 
           </div>
         </div>
       </div>
             </div>
+<<<<<<< HEAD
             <div class="card-footer small" align="right">
+=======
+            <div class="card-footer small" align="left">
+>>>>>>> 48d6367c980c99adbc44c61abcb9f5865700523e
                 <button type="submit" class="btn btn-primary btn-sm" name="tapi_upload"><i class="fas fa-upload"></i> Edit</button> <a href="index.php"><div class="btn btn-secondary btn-sm"><i class="fas fa-window-close"></i> Cancle</div></a>
               </div>
               </form>
